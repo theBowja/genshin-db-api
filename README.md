@@ -1,0 +1,2 @@
+# genshin-db-api
+ 
