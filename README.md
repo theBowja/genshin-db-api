@@ -1,2 +1,3 @@
 # genshin-db-api
  
+lol
