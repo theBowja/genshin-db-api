@@ -14,7 +14,7 @@ const logtail = new Logtail(process.env.LOGTAIL_SECRET);
 function parseOptions(input) {
   let opts = { dumpResult: true };
 
-  ['matchAltNames', 'matchAliases', 'matchCategories', 'verboseCategories'].forEach(prop => {
+  ['dumpResult', 'matchAltNames', 'matchAliases', 'matchCategories', 'verboseCategories'].forEach(prop => {
     if(input[prop] !== undefined) {
       opts[prop] = parseBoolean(input[prop]);
     }
@@ -59,10 +59,16 @@ export default function fetchUser(req, res) {
   if(genshindb.Folders[folder]) {
     let params = req.query;
     let opts = parseOptions(params);
+    let userDumpResult = opts.dumpResult;
+    opts.dumpResult = true;
 
     const queryresult = genshindb[folder](params.query, opts);
     logtail.info("success", { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
-    res.json(queryresult);
+    if(userDumpResult) {
+    	res.json(queryresult);
+    } else {
+    	res.json(queryresult.result);
+    }
   } else {
   	logtail.info("invalid folder");
     res.status(404).send(new Error('Not a valid search folder.'));
