@@ -1,7 +1,7 @@
 let genshindb = require('genshin-db');
 const { Logtail } = require("@logtail/node");
 
-const logtail = new Logtail("xZCuWTDJ3m6Gc2zTLdn2pNec");
+const logtail = new Logtail(process.env.LOGTAIL_SECRET);
 
 /*
   matchAltNames: true, // Allows the matching of alternate or custom names.
@@ -42,6 +42,10 @@ function parseBoolean(str) {
 // `/api/user/[id].js
 export default function fetchUser(req, res) {
   const folder = req.query.folder ? req.query.folder.toLowerCase() : undefined;
+  if(folder === undefined) return;
+
+  if(folder === 'language' || 'languages') return Object.keys(genshindb.Languages);
+  if(folder === 'folder' || 'folders') return Object.keys(genshindb.Folder);
 
 
   if(genshindb.Folders[folder]) {
