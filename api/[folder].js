@@ -59,7 +59,7 @@ export default function fetchUser(req, res) {
   if(genshindb.Folders[folder]) {
     let params = req.query;
     let opts = parseOptions(params);
-    let userDumpResult = opts.dumpResult || false;
+    let userDumpResult = opts.dumpResult === true;
     opts.dumpResult = true;
 
     const queryresult = genshindb[folder](params.query, opts);
