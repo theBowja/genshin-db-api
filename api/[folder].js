@@ -46,7 +46,7 @@ export default function fetchUser(req, res) {
     let params = req.query;
     let opts = parseOptions(params);
 
-    const queryresult = genshindb[req.params.folder](params.query, opts);
+    const queryresult = genshindb[folder](params.query, opts);
     res.json(queryresult);
   } else {
     res.status(404).send(new Error('Not a valid search folder.'));
