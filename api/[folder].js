@@ -51,7 +51,4 @@ export default function fetchUser(req, res) {
   } else {
     res.status(404).send(new Error('Not a valid search folder.'));
   }
-
-
-
 }

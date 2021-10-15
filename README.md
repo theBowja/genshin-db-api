@@ -1,3 +1,3 @@
 # genshin-db-api
  
-lol
+this is for vercel serverless functions
