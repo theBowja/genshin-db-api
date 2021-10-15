@@ -1,7 +1,11 @@
 let genshindb = require('genshin-db');
 const { Logtail } = require("@logtail/node");
 
-const logtail = new Logtail(process.env.LOGTAIL_SECRET);
+try {
+	const logtail = new Logtail(process.env.LOGTAIL_SECRET);
+} catch(e) {
+	console.log(e);
+}
 
 /*
   matchAltNames: true, // Allows the matching of alternate or custom names.
@@ -38,6 +42,14 @@ function parseBoolean(str) {
   else return undefined;
 }
 
+function log(message, data) {
+	try {
+		logtail.info(message, data);
+	} catch(e) {
+		console.log(e);
+	}
+}
+
 
 // `/api/user/[id].js
 export default function fetchUser(req, res) {
@@ -47,11 +59,11 @@ export default function fetchUser(req, res) {
 	if(folder === undefined) return;
 
 	if(folder === 'language' || folder === 'languages') {
-		logtail.info('get languages');
+		log('get languages');
 		return res.json(Object.keys(genshindb.Languages));
 	}
 	if(folder === 'folder' || folder === 'folders') {
-		logtail.info('get folders');
+		log('get folders');
 		return res.json(Object.keys(genshindb.Folder));
 	}
 
@@ -64,14 +76,14 @@ export default function fetchUser(req, res) {
 
     const queryresult = genshindb[folder](params.query, opts);
     queryresult.options.dumpResult = userDumpResult;
-    logtail.info("success "+queryresult.match, { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
+    log("success "+queryresult.match, { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
     if(userDumpResult) {
     	res.json(queryresult);
     } else {
     	res.json(queryresult.result);
     }
   } else {
-  	logtail.info("invalid folder");
+  	log("invalid folder");
     res.status(404).send(new Error('Not a valid search folder.'));
   }
 }
