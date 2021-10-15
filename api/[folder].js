@@ -1,5 +1,7 @@
 let genshindb = require('genshin-db');
+const { Logtail } = require("@logtail/node");
 
+const logtail = new Logtail(process.env.LOGTAIL_SECRET);
 
 /*
   matchAltNames: true, // Allows the matching of alternate or custom names.
@@ -39,7 +41,7 @@ function parseBoolean(str) {
 
 // `/api/user/[id].js
 export default function fetchUser(req, res) {
-  const folder = req.query.folder.toLowerCase();
+  const folder = req.query.folder ? req.query.folder.toLowerCase() : undefined;
 
 
   if(genshindb.Folders[folder]) {
@@ -47,8 +49,10 @@ export default function fetchUser(req, res) {
     let opts = parseOptions(params);
 
     const queryresult = genshindb[folder](params.query, opts);
+    logtail.info("success", { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
     res.json(queryresult);
   } else {
+  	logtail.info("invalid folder");
     res.status(404).send(new Error('Not a valid search folder.'));
   }
 }
