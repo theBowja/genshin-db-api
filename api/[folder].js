@@ -1,8 +1,9 @@
 let genshindb = require('genshin-db');
 const { Logtail } = require("@logtail/node");
 
+let logtail;
 try {
-	const logtail = new Logtail(process.env.LOGTAIL_SECRET);
+	logtail = new Logtail(process.env.LOGTAIL_SECRET);
 } catch(e) {
 	console.log(e);
 }
