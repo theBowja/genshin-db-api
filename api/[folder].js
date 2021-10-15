@@ -59,11 +59,12 @@ export default function fetchUser(req, res) {
   if(genshindb.Folders[folder]) {
     let params = req.query;
     let opts = parseOptions(params);
-    let userDumpResult = opts.dumpResult;
+    let userDumpResult = opts.dumpResult || false;
     opts.dumpResult = true;
 
     const queryresult = genshindb[folder](params.query, opts);
-    logtail.info("success", { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
+    opts.dumpResult = userDumpResult;
+    logtail.info("success "+queryresult.match, { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
     if(userDumpResult) {
     	res.json(queryresult);
     } else {
