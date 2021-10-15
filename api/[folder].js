@@ -1,7 +1,7 @@
 let genshindb = require('genshin-db');
 const { Logtail } = require("@logtail/node");
 
-const logtail = new Logtail(process.env.LOGTAIL_SECRET);
+const logtail = new Logtail("xZCuWTDJ3m6Gc2zTLdn2pNec");
 
 /*
   matchAltNames: true, // Allows the matching of alternate or custom names.
