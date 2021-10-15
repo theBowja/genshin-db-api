@@ -17,7 +17,7 @@ try {
   resultLanguage: "English" // Output language that you want your results to be in.
 */
 function parseOptions(input) {
-  let opts = { dumpResult: true };
+  let opts = {};
 
   ['dumpResult', 'matchAltNames', 'matchAliases', 'matchCategories', 'verboseCategories'].forEach(prop => {
     if(input[prop] !== undefined) {
