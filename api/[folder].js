@@ -39,7 +39,7 @@ function parseBoolean(str) {
 
 // `/api/user/[id].js
 export default function fetchUser(req, res) {
-  const folder = req.query.folder;
+  const folder = req.query.folder.toLowerCase();
 
 
   if(genshindb.Folders[folder]) {
