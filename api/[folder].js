@@ -63,7 +63,7 @@ export default function fetchUser(req, res) {
     opts.dumpResult = true;
 
     const queryresult = genshindb[folder](params.query, opts);
-    opts.dumpResult = userDumpResult;
+    queryresult.options.dumpResult = userDumpResult;
     logtail.info("success "+queryresult.match, { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
     if(userDumpResult) {
     	res.json(queryresult);
