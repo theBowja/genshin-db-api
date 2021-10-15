@@ -41,11 +41,19 @@ function parseBoolean(str) {
 
 // `/api/user/[id].js
 export default function fetchUser(req, res) {
-  const folder = req.query.folder ? req.query.folder.toLowerCase() : undefined;
-  if(folder === undefined) return;
+	if(!enableCors(req, res)) return;
 
-  if(folder === 'language' || folder === 'languages') return res.json(Object.keys(genshindb.Languages));
-  if(folder === 'folder' || folder === 'folders') return res.json(Object.keys(genshindb.Folder));
+	const folder = req.query.folder ? req.query.folder.toLowerCase() : undefined;
+	if(folder === undefined) return;
+
+	if(folder === 'language' || folder === 'languages') {
+		logtail.info('get languages');
+		return res.json(Object.keys(genshindb.Languages));
+	}
+	if(folder === 'folder' || folder === 'folders') {
+		logtail.info('get folders');
+		return res.json(Object.keys(genshindb.Folder));
+	}
 
 
   if(genshindb.Folders[folder]) {
@@ -59,4 +67,21 @@ export default function fetchUser(req, res) {
   	logtail.info("invalid folder");
     res.status(404).send(new Error('Not a valid search folder.'));
   }
+}
+
+function enableCors(req, res) {
+	res.setHeader('Access-Control-Allow-Credentials', true)
+	res.setHeader('Access-Control-Allow-Origin', '*')
+	// another common pattern
+	// res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+	res.setHeader('Access-Control-Allow-Methods', 'GET')
+	res.setHeader(
+		'Access-Control-Allow-Headers',
+		'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+	)
+	if (req.method === 'OPTIONS') {
+		res.status(200).end();
+	return false;
+	}
+	return true;
 }
