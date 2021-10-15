@@ -44,8 +44,8 @@ export default function fetchUser(req, res) {
   const folder = req.query.folder ? req.query.folder.toLowerCase() : undefined;
   if(folder === undefined) return;
 
-  if(folder === 'language' || 'languages') return Object.keys(genshindb.Languages);
-  if(folder === 'folder' || 'folders') return Object.keys(genshindb.Folder);
+  if(folder === 'language' || 'languages') return res.json(Object.keys(genshindb.Languages));
+  if(folder === 'folder' || 'folders') return res.json(Object.keys(genshindb.Folder));
 
 
   if(genshindb.Folders[folder]) {
