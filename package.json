@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "@logtail/node": "^0.1.10",
-    "genshin-db": "^4.1.0"
+    "genshin-db": "^4.1.1"
   }
 }
