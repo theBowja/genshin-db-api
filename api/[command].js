@@ -132,7 +132,7 @@ export default function fetchUser(req, res) {
 				log('get stats');
                                 let mystats = getStats(req.query);
                                 if (mystats === undefined) return res.status(404).send(new Error('No data found for query.'));
-				else return res.json(mystats));
+				else return res.json(mystats);
 			}
 	}
 
