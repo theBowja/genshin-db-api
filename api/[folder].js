@@ -97,6 +97,7 @@ export default function fetchUser(req, res) {
     let params = req.query;
     let opts = parseOptions(params);
     console.log(opts);
+    let asc = params.asc === '-' ? '-' : '+';
     let stats = params.stats ? params.stats : 0;
     let userDumpResult = opts.dumpResult === true;
     console.log(userDumpResult);
@@ -106,14 +107,17 @@ export default function fetchUser(req, res) {
     let newopts = JSON.stringify(opts).split('\"').join('');
     console.log(userDumpResult);  
     //opts=JSON.parse(JSON.stringify(opts).split('\"').join(''));
+    var toEval;
     let queryresult = {};
     if(userDumpResult) {
-      queryresult = eval('genshindb.'+folder+'(\''+params.query+'\','+newopts+')');
+      toEval = `genshindb.${folder}(\'${params.query}\',${newopts})`
     }else if(stats === 0) {
-      queryresult = eval('genshindb.'+folder+'(\''+params.query+'\',)');
+      toEval = `genshindb.${folder}(\'${params.query}\',)`;
     }else {
-      queryresult = eval('genshindb.'+folder+'(\''+params.query+'\',).stats('+stats+')');
+      toEval = `genshindb.${folder}(\'${params.query}\',).stats(${stats},'${asc}')`;
     }
+    console.log(toEval);
+    queryresult = eval(toEval);
     if(userDumpResult) {
       queryresult.options.dumpResult = userDumpResult;
       log("success "+queryresult.match, { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
