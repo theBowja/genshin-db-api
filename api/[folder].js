@@ -47,7 +47,7 @@ function parseBoolean(str) {
 
 function log(message, data) {
 	try {
-		logtail.info(message, data);
+		//logtail.info(message, data);
 	} catch(e) {
 		console.log(e);
 	}
@@ -77,7 +77,9 @@ function getStats(params) {
 	opts.matchCategories = false;
 	opts.dumpResult = false;
 	const queryresult = genshindb[folder](params.query, opts);
-	if (params.level) {
+	
+        console.log(params);
+        if (params.level) {
 		let [level, ascension] = parseLevel(params.level);
 		if (level !== undefined) {
 			console.log(ascension);
