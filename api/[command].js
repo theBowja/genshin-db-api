@@ -93,7 +93,8 @@ function getStats(params) {
 
 function parseLevel(level) {
 	const regex = /(\d+)(.*)/;
-	if ((m = regex.exec(level)) !== null) {
+        let m = regex.exec(level);
+	if (m !== null) {
 		return [m[1], m[2]];
 	}
 	return [undefined, undefined];
