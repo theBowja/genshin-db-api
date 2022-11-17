@@ -81,11 +81,10 @@ function getStats(params) {
                 return undefined;
         }
 
-        console.log(params);
         if (params.level) {
 		let [level, ascension] = parseLevel(params.level);
 		if (level !== undefined) {
-			console.log(ascension);
+			ascension.replaceAll(' ', '+');
 			return queryresult.stats(level, ascension);
 		}
 	}
