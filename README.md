@@ -37,5 +37,13 @@ Returns the list of folders.
 https://genshin-db-api.vercel.app/api/languages  
 Returns the list of languages.
 
-## stats
-Unimplemented.
+## stats?folder=[folder]&query=[query]
+https://genshin-db-api.vercel.app/api/stats?folder=characters&query=hutao  
+Returns the stats for each level for the specified folder and query as a JSON map.  
+
+You may include standard genshindb options as url query parameters (case-sensitive).  
+You may include `level` as a query parameter to get the stats for a specific level.  
+Examples:  
+https://genshin-db-api.vercel.app/api/stats?folder=characters&query=胡桃&queryLanguages=chinese  
+https://genshin-db-api.vercel.app/api/stats?folder=weapons&query=jadespear&level=90  
+https://genshin-db-api.vercel.app/api/stats?folder=characters&query=ganyu&level=60+
