@@ -3,7 +3,7 @@ const { Logtail } = require("@logtail/node");
 
 let logtail;
 try {
-	logtail = new Logtail(process.env.LOGTAIL_SECRET);
+	//logtail = new Logtail(process.env.LOGTAIL_SECRET);
 } catch(e) {
 	console.log(e);
 }
@@ -60,11 +60,11 @@ export default function fetchUser(req, res) {
 	if(folder === undefined) return;
 
 	if(folder === 'language' || folder === 'languages') {
-		log('get languages');
+		//log('get languages');
 		return res.json(Object.keys(genshindb.Languages));
 	}
 	if(folder === 'folder' || folder === 'folders') {
-		log('get folders');
+		//log('get folders');
 		return res.json(Object.keys(genshindb.Folder));
 	}
 
@@ -72,19 +72,31 @@ export default function fetchUser(req, res) {
   if(genshindb.Folders[folder]) {
     let params = req.query;
     let opts = parseOptions(params);
+    console.log(opts);
+    let stats = params.stats ? params.stats : 0;
     let userDumpResult = opts.dumpResult === true;
+    console.log(userDumpResult);
     opts.dumpResult = true;
-
-    const queryresult = genshindb[folder](params.query, opts);
-    queryresult.options.dumpResult = userDumpResult;
-    log("success "+queryresult.match, { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
+    
+    //const queryresult = genshindb[folder](params.query, opts);
+    let newopts = JSON.stringify(opts).split('\"').join('');
+    console.log(userDumpResult);  
+    //opts=JSON.parse(JSON.stringify(opts).split('\"').join(''));
+    let queryresult = {};
     if(userDumpResult) {
-    	res.json(queryresult);
-    } else {
-    	res.json(queryresult.result);
+      queryresult = eval('genshindb.'+folder+'(\''+params.query+'\','+newopts+')');
+    }else if(stats === 0) {
+      queryresult = eval('genshindb.'+folder+'(\''+params.query+'\',)');
+    }else {
+      queryresult = eval('genshindb.'+folder+'(\''+params.query+'\',).stats('+stats+')');
     }
+    if(userDumpResult) {
+      queryresult.options.dumpResult = userDumpResult;
+      log("success "+queryresult.match, { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
+    }
+    res.json(queryresult);
   } else {
-  	log("invalid folder");
+  	//log("invalid folder");
     res.status(404).send(new Error('Not a valid search folder.'));
   }
 }
