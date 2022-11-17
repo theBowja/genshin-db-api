@@ -1,6 +1,6 @@
 # genshin-db-api
  
-Web API using Vercel serverless function.
+Web API for [genshin-db](https://www.npmjs.com/package/genshin-db) using Vercel serverless function.
 
 ## [folder]?query=[query]
 https://genshin-db-api.vercel.app/api/characters?query=hutao  
