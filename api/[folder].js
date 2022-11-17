@@ -51,6 +51,23 @@ function log(message, data) {
 	}
 }
 
+const foldersList = Object.keys(genshindb.Folder);
+const languagesList = Object.keys(genshindb.Languages);
+
+function createConfig(opts) {
+    const config = {};
+    config.folders = foldersList;
+    config.languages = languagesList;
+    config.categories = {};
+    for (let folder of config.folders) {
+        config.categories[folder] = {};
+        config.categories[folder].names = genshindb.categories('names', folder, opts);
+        for (let category of config.categories[folder].names) {
+            config.categories[folder][category] = genshindb.categories(category, folder, opts);
+        }
+    }
+    return config;
+}
 
 // `/api/user/[id].js
 export default function fetchUser(req, res) {
@@ -59,15 +76,23 @@ export default function fetchUser(req, res) {
 	const folder = req.query.folder ? req.query.folder.toLowerCase() : undefined;
 	if(folder === undefined) return;
 
-	if(folder === 'language' || folder === 'languages') {
-		log('get languages');
-		return res.json(Object.keys(genshindb.Languages));
-	}
-	if(folder === 'folder' || folder === 'folders') {
-		log('get folders');
-		return res.json(Object.keys(genshindb.Folder));
-	}
+	switch (folder) {
+		case 'default':
+		case 'config':
+			log('get config');
+			let opts = parseOptions(params);
+			return res.json(createConfig(opts));
+			
+		case 'language':
+		case 'languages':
+			log('get folders');
+			return res.json(languagesList);
 
+		case 'folder':
+		case 'folders':
+			log('get languages');
+			return res.json(foldersList);
+	}
 
   if(genshindb.Folders[folder]) {
     let params = req.query;
