@@ -80,8 +80,7 @@ export default function fetchUser(req, res) {
 		case 'default':
 		case 'config':
 			log('get config');
-			let opts = parseOptions(params);
-			return res.json(createConfig(opts));
+			return res.json(createConfig(parseOptions(req.query)));
 			
 		case 'language':
 		case 'languages':
