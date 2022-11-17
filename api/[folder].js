@@ -9,17 +9,19 @@ try {
 }
 
 /*
-  matchAltNames: true, // Allows the matching of alternate or custom names.
-  matchAliases: false, // Allows the matching of aliases. These are searchable fields that returns the data object the query matched in.
-  matchCategories: false, // Allows the matching of categories. If true, then returns an array if it matches.
-  verboseCategories: false, // Used if a category is matched. If true, then replaces each string name in the array with the data object instead.
-  queryLanguages: ["English"], // Array of languages that your query will be searched in.
-  resultLanguage: "English" // Output language that you want your results to be in.
+    dumpResult: false, // The query result will return an object with the properties: { query, folder, match, matchtype, options, filename, result }.
+    matchNames: true, // Allows the matching of names.
+    matchAltNames: true, // Allows the matching of alternate or custom names.
+    matchAliases: false, // Allows the matching of aliases. These are searchable fields that returns the data object the query matched in.
+    matchCategories: false, // Allows the matching of categories. If true, then returns an array if it matches.
+    verboseCategories: false, // Used if a category is matched. If true, then replaces each string name in the array with the data object instead.
+    queryLanguages: ["English"], // Array of languages that your query will be searched in.
+    resultLanguage: "English" // Output language that you want your results to be in.
 */
 function parseOptions(input) {
   let opts = {};
 
-  ['dumpResult', 'matchAltNames', 'matchAliases', 'matchCategories', 'verboseCategories'].forEach(prop => {
+  ['dumpResult', 'matchNames', 'matchAltNames', 'matchAliases', 'matchCategories', 'verboseCategories'].forEach(prop => {
     if(input[prop] !== undefined) {
       opts[prop] = parseBoolean(input[prop]);
     }
@@ -59,6 +61,7 @@ function createConfig(opts) {
     config.folders = foldersList;
     config.languages = languagesList;
     config.categories = {};
+    config.defaultOptions = genshindb.getOptions();
     for (let folder of config.folders) {
         config.categories[folder] = {};
         config.categories[folder].names = genshindb.categories('names', folder, opts);
