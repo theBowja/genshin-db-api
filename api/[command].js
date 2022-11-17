@@ -76,8 +76,11 @@ function getStats(params) {
 	let opts = parseOptions(params);
 	opts.matchCategories = false;
 	opts.dumpResult = false;
-	const queryresult = genshindb[folder](params.query, opts);
-	
+	const queryresult = genshindb[params.folder](params.query, opts);
+	if (queryresult === undefined) {
+                return undefined;
+        }
+
         console.log(params);
         if (params.level) {
 		let [level, ascension] = parseLevel(params.level);
@@ -96,14 +99,14 @@ function parseLevel(level) {
 	return [undefined, undefined];
 }
 
-// `/api/[folder]
+// `/api/[command]
 export default function fetchUser(req, res) {
-	if(!enableCors(req, res)) return;
+	if (!enableCors(req, res)) return;
 
-	const folder = req.query.folder ? req.query.folder.toLowerCase() : undefined;
-	if(folder === undefined) return;
+	const command = req.query.command ? req.query.command.toLowerCase() : undefined;
+	if (command === undefined) return;
 
-	switch (folder) {
+	switch (command) {
 		case 'default':
 		case 'config':
 			log('get config');
@@ -111,33 +114,35 @@ export default function fetchUser(req, res) {
 			
 		case 'language':
 		case 'languages':
-			log('get folders');
+			log('get languages');
 			return res.json(languagesList);
 
 		case 'folder':
 		case 'folders':
-			log('get languages');
+			log('get folders');
 			return res.json(foldersList);
 			
 		case 'stat':
 		case 'stats':
-                        console.log(req);
-			if (folder !== 'characters' && folder !== 'weapons') {
+                        let statfolder = req.query.folder;
+			if (statfolder !== 'characters' && statfolder !== 'weapons') {
 				log("invalid stats folder");
 				return res.status(404).send(new Error('Not a valid stat folder.'));
 			} else {
 				log('get stats');
-				return res.json(getStats(req.query));
+                                let mystats = getStats(req.query);
+                                if (mystats === undefined) return res.status(404).send(new Error('No data found for query.'));
+				else return res.json(mystats));
 			}
 	}
 
-  if(genshindb.Folders[folder]) {
+  if(genshindb.Folders[command]) {
     let params = req.query;
     let opts = parseOptions(params);
     let userDumpResult = opts.dumpResult === true;
     opts.dumpResult = true;
 
-    const queryresult = genshindb[folder](params.query, opts);
+    const queryresult = genshindb[command](params.query, opts);
     queryresult.options.dumpResult = userDumpResult;
     log("success "+queryresult.match, { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
     if(userDumpResult) {
