@@ -60,8 +60,8 @@ function createConfig(opts) {
     const config = {};
     config.folders = foldersList;
     config.languages = languagesList;
-    config.categories = {};
     config.defaultOptions = genshindb.getOptions();
+    config.categories = {};
     for (let folder of config.folders) {
         config.categories[folder] = {};
         config.categories[folder].names = genshindb.categories('names', folder, opts);
@@ -72,7 +72,29 @@ function createConfig(opts) {
     return config;
 }
 
-// `/api/user/[id].js
+function getStats(params) {
+	let opts = parseOptions(params);
+	opts.matchCategories = false;
+	opts.dumpResult = false;
+	const queryresult = genshindb[folder](params.query, opts);
+	if (params.level) {
+		let [level, ascension] = parseLevel(params.level);
+		if (level !== undefined) {
+			console.log(ascension);
+			return queryresult.stats(level, ascension);
+		}
+	}
+}
+
+function parseLevel(level) {
+	const regex = /(\d+)(.*)/;
+	if ((m = regex.exec(level)) !== null) {
+		return [m[1], m[2]];
+	}
+	return [undefined, undefined];
+}
+
+// `/api/[folder]
 export default function fetchUser(req, res) {
 	if(!enableCors(req, res)) return;
 
@@ -94,6 +116,16 @@ export default function fetchUser(req, res) {
 		case 'folders':
 			log('get languages');
 			return res.json(foldersList);
+			
+		case 'stat':
+		case 'stats':
+			if (folder !== 'characters' && folder !== 'weapons') {
+				log("invalid stats folder");
+				return res.status(404).send(new Error('Not a valid stat folder.'));
+			} else {
+				log('get stats');
+				return res.json(getStats(req.query));
+			}
 	}
 
   if(genshindb.Folders[folder]) {
