@@ -121,7 +121,7 @@ export default function fetchUser(req, res) {
 			
 		case 'stat':
 		case 'stats':
-                        console.log(folder);
+                        console.log(req);
 			if (folder !== 'characters' && folder !== 'weapons') {
 				log("invalid stats folder");
 				return res.status(404).send(new Error('Not a valid stat folder.'));
