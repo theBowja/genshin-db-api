@@ -18,7 +18,7 @@ You may include standard genshindb options as url query parameters (case-sensiti
 - resultLanguage // Output language that you want your results to be in.
 
 Examples:  
-https://genshin-db-api.vercel.app/api/talents?query=slime&matchCategories=true&queryLanguages=english,jap
+https://genshin-db-api.vercel.app/api/talents?query=slime&matchCategories=true&queryLanguages=english,jap  
 https://genshin-db-api.vercel.app/api/weapons?query=skywardspear&dumpResult=true&resultLanguage=korean
 
 ## config
@@ -47,4 +47,4 @@ You may include `level` as a query parameter to get the stats for a specific lev
 Examples:  
 https://genshin-db-api.vercel.app/api/stats?folder=characters&query=胡桃&queryLanguages=chinese  
 https://genshin-db-api.vercel.app/api/stats?folder=weapons&query=jadespear&level=90  
-https://genshin-db-api.vercel.app/api/stats?folder=characters&query=ganyu&level=60+
+https://genshin-db-api.vercel.app/api/stats?folder=characters&query=ganyu&level=60+  
