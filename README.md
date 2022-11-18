@@ -19,7 +19,7 @@ You may include standard genshindb options as url query parameters (case-sensiti
 
 Examples:  
 https://genshin-db-api.vercel.app/api/talents?query=slime&matchCategories=true&queryLanguages=english,jap  
-https://genshin-db-api.vercel.app/api/weapons?query=skywardspear&dumpResult=true&resultLanguage=korean
+https://genshin-db-api.vercel.app/api/weapons?query=skywardharp&dumpResult=true&resultLanguage=korean
 
 ## config
 https://genshin-db-api.vercel.app/api/config  
