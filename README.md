@@ -39,8 +39,12 @@ Returns the list of languages.
 
 ## stats?folder=[folder]&query=[query]
 https://genshin-db-api.vercel.app/api/stats?folder=characters&query=hutao  
-Returns the stats for each level for the specified folder and query as a JSON map.  
+Returns the stats for every level for the specified folder and query as a JSON map.  
 Only for `characters` and `weapons` folder.
+
+Ascended stats are mapped with a '+' like '80+'.
+Examples:  
+https://genshin-db-api.vercel.app/api/stats?folder=characters&query=hutao
 
 You may include standard genshindb options as url query parameters (case-sensitive).  
 You may include `level` as a query parameter to get the stats for a specific level.  
