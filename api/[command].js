@@ -64,14 +64,28 @@ function createConfig(opts) {
     config.categories = {};
     for (let folder of config.folders) {
         config.categories[folder] = {};
-	try {
-        	config.categories[folder].names = genshindb.categories('names', folder, opts);
-        	for (let category of config.categories[folder].names) {
-        	    config.categories[folder][category] = genshindb.categories(category, folder, opts);
-        	}
-	} catch(e) {}
+		try {
+				config.categories[folder].names = genshindb.categories('names', folder, opts);
+				for (let category of config.categories[folder].names) {
+					config.categories[folder][category] = genshindb.categories(category, folder, opts);
+				}
+		} catch(e) {}
     }
     return config;
+}
+
+function getCategories(opts) {
+	const categories = {};
+    for (let folder of foldersList) {
+        categories[folder] = {};
+		try {
+				categories[folder].names = genshindb.categories('names', folder, opts);
+				for (let category of config.categories[folder].names) {
+					categories[folder][category] = genshindb.categories(category, folder, opts);
+				}
+		} catch(e) {}
+    }
+    return categories;
 }
 
 function getStats(params) {
@@ -149,6 +163,11 @@ export default function fetchUser(req, res) {
 		case 'folders':
 			log('get folders');
 			return res.json(foldersList);
+			
+		case 'category':
+		case 'categories':
+			log('get categories');
+			return res.json(getCategories(parseOptions(req.query)));
 			
 		case 'stat':
 		case 'stats':
