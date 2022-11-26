@@ -80,7 +80,7 @@ function getCategories(opts) {
         categories[folder] = {};
 		try {
 				categories[folder].names = genshindb.categories('names', folder, opts);
-				for (let category of config.categories[folder].names) {
+				for (let category of categories[folder].names) {
 					categories[folder][category] = genshindb.categories(category, folder, opts);
 				}
 		} catch(e) {}
