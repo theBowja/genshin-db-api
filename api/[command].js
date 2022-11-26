@@ -92,6 +92,28 @@ function getStats(params) {
 			else return queryresult.stats;
 		}
 	}
+	
+	// no valid level provided, then return all stats in a map
+	queryresult.stats = generateAllStats(queryresult.result.stats);
+	if (dumpStat) return queryresult;
+	else return queryresult.stats;
+}
+
+// creates a map of stats for all levels
+function generateAllStats(statsFunc) {
+	const statsMap = {};
+	for (let tens = 0; tens <= 8; tens++) {
+		for (let ones = 1; ones <= 10; ones++) {
+			const level = tens*10 + ones;
+			const stats = statsFunc(level);
+			if (stats) statsMap[level] = stats;
+			if (ones === 10) {
+				const statsPlus = statsFunc(level, '+');
+				if (statsPlus && stats.ascension !== statsPlus.ascension) statsMap[level+'+'] = statsPlus;
+			}
+		}
+	}
+	return statsMap;
 }
 
 function parseLevel(level) {
