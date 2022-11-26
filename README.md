@@ -41,6 +41,14 @@ Returns the list of folders.
 https://genshin-db-api.vercel.app/api/languages  
 Returns the list of languages.
 
+## categories
+https://genshin-db-api.vercel.app/api/categories  
+Returns the category values for every folder.
+
+You can use `resultLanguage` to get category values for other languages.  
+Example:  
+https://genshin-db-api.vercel.app/api/categories?resultLanguage=spanish  
+
 ## stats?folder=[folder]&query=[query]
 https://genshin-db-api.vercel.app/api/stats?folder=characters&query=hutao  
 Returns the stats for every level for the specified folder and query as a JSON map.  
