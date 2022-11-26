@@ -74,10 +74,11 @@ function createConfig(opts) {
 
 function getStats(params) {
 	let opts = parseOptions(params);
+	const dumpStat = opts.dumpResult;
 	opts.matchCategories = false;
-	opts.dumpResult = false;
+	opts.dumpResult = true;
 	const queryresult = genshindb[params.folder](params.query, opts);
-	if (queryresult === undefined) {
+	if (queryresult.result === undefined) {
                 return undefined;
         }
 
@@ -85,7 +86,9 @@ function getStats(params) {
 		let [level, ascension] = parseLevel(params.level);
 		if (level !== undefined) {
 			ascension = ascension.replace(/ /g, '+');
-			return queryresult.stats(level, ascension);
+			queryresult.stats = queryresult.result.stats(level, ascension);
+			if (dumpStat) return queryresult;
+			else return queryresult.stats;
 		}
 	}
 }
