@@ -29,6 +29,10 @@ Returns the following:
 - the default options used by the api
 - list of category values for each folder
 
+You can use `resultLanguage` to get category values for other languages.  
+Example:  
+https://genshin-db-api.vercel.app/api/config?resultLanguage=spanish  
+
 ## folders
 https://genshin-db-api.vercel.app/api/folders  
 Returns the list of folders.
@@ -40,11 +44,8 @@ Returns the list of languages.
 ## stats?folder=[folder]&query=[query]
 https://genshin-db-api.vercel.app/api/stats?folder=characters&query=hutao  
 Returns the stats for every level for the specified folder and query as a JSON map.  
-Only for `characters` and `weapons` folder.
-
-Ascended stats are mapped with a '+' like '80+'.
-Examples:  
-https://genshin-db-api.vercel.app/api/stats?folder=characters&query=hutao
+Ascended stats are mapped with a '+' like '80+'.  
+Only for `characters` and `weapons` folder.  
 
 You may include standard genshindb options as url query parameters (case-sensitive).  
 You may include `level` as a query parameter to get the stats for a specific level.  
