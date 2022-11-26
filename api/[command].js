@@ -64,10 +64,12 @@ function createConfig(opts) {
     config.categories = {};
     for (let folder of config.folders) {
         config.categories[folder] = {};
-        config.categories[folder].names = genshindb.categories('names', folder, opts);
-        for (let category of config.categories[folder].names) {
-            config.categories[folder][category] = genshindb.categories(category, folder, opts);
-        }
+	try {
+        	config.categories[folder].names = genshindb.categories('names', folder, opts);
+        	for (let category of config.categories[folder].names) {
+        	    config.categories[folder][category] = genshindb.categories(category, folder, opts);
+        	}
+	} catch(e) {}
     }
     return config;
 }
