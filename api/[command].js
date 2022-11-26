@@ -86,7 +86,7 @@ function getStats(params) {
 		let [level, ascension] = parseLevel(params.level);
 		if (level !== undefined) {
 			ascension = ascension.replace(/ /g, '+');
-			queryresult.level = params.level;
+			queryresult.level = ''+level+ascension;
 			queryresult.stats = queryresult.result.stats(level, ascension);
 			if (dumpStat) return queryresult;
 			else return queryresult.stats;
