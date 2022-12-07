@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@logtail/node": "^0.1.10",
+    "@logtail/node": "^0.1.14",
     "genshin-db": "^4.3.4"
   }
 }
