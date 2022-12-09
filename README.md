@@ -56,8 +56,10 @@ Ascended stats are mapped with a '+' like '80+'.
 Only for `characters` and `weapons` folder.  
 
 You may include standard genshindb options as url query parameters (case-sensitive).  
+Adding `dumpResult=true` will allow you to get the data object of the character/weapon being searched.
 You may include `level` as a query parameter to get the stats for a specific level.  
 Examples:  
 https://genshin-db-api.vercel.app/api/stats?folder=characters&query=胡桃&queryLanguages=chinese  
 https://genshin-db-api.vercel.app/api/stats?folder=weapons&query=jadespear&level=90  
+https://genshin-db-api.vercel.app/api/stats?folder=characters&query=hutao&dumpResult=true
 https://genshin-db-api.vercel.app/api/stats?folder=characters&query=ganyu&level=60+  
