@@ -1,4 +1,5 @@
 let genshindb = require('genshin-db');
+let genshindbtcg = require('@genshin-db/tcg');
 const { Logtail } = require("@logtail/node");
 
 let logtail;
@@ -56,36 +57,49 @@ function log(message, data) {
 const foldersList = Object.keys(genshindb.Folder);
 const languagesList = Object.keys(genshindb.Languages);
 
-function createConfig(opts) {
-    const config = {};
-    config.folders = foldersList;
-    config.languages = languagesList;
-    config.defaultOptions = genshindb.getOptions();
-    config.categories = {};
-    for (let folder of config.folders) {
-        config.categories[folder] = {};
+function createConfig(opts, istcg=false) {
+  const config = {};
+  config.folders = foldersList;
+  config.languages = languagesList;
+  config.defaultOptions = genshindb.getOptions();
+  config.categories = {};
+  for (let folder of config.folders) {
+    config.categories[folder] = {};
 		try {
+			if (folder.startsWith('tcg'))
+				config.categories[folder].names = genshindbtcg.categories('names', folder, opts);
+			else
 				config.categories[folder].names = genshindb.categories('names', folder, opts);
-				for (let category of config.categories[folder].names) {
+
+			for (let category of config.categories[folder].names) {
+				if (folder.startsWith('tcg'))
+					config.categories[folder][category] = genshindbtcg.categories(category, folder, opts);
+				else
 					config.categories[folder][category] = genshindb.categories(category, folder, opts);
-				}
+			}
 		} catch(e) {}
-    }
-    return config;
+  }
+  return config;
 }
 
-function getCategories(opts) {
+function getCategories(opts, istcg=false) {
 	const categories = {};
-    for (let folder of foldersList) {
-        categories[folder] = {};
+  for (let folder of foldersList) {
+    categories[folder] = {};
 		try {
+			if (folder.startsWith('tcg'))
+				categories[folder].names = genshindbtcg.categories('names', folder, opts);
+			else
 				categories[folder].names = genshindb.categories('names', folder, opts);
-				for (let category of categories[folder].names) {
-					categories[folder][category] = genshindb.categories(category, folder, opts);
-				}
+			for (let category of categories[folder].names) {
+				if (folder.startsWith('tcg'))
+					categories[folder].names = genshindbtcg.categories('names', folder, opts);
+				else
+				categories[folder][category] = genshindb.categories(category, folder, opts);
+			}
 		} catch(e) {}
-    }
-    return categories;
+  }
+  return categories;
 }
 
 function getStats(params) {
@@ -184,12 +198,13 @@ export default function fetchUser(req, res) {
 	}
 
   if(genshindb.Folders[command]) {
+  	const istcg = command.startsWith('tcg');
     let params = req.query;
     let opts = parseOptions(params);
     let userDumpResult = opts.dumpResult === true;
     opts.dumpResult = true;
 
-    const queryresult = genshindb[command](params.query, opts);
+    const queryresult = istcg ? genshindbtcg[command](params.query, opts) : genshindb[command](params.query, opts);
     queryresult.options.dumpResult = userDumpResult;
     log("success "+queryresult.match, { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
     if(userDumpResult) {
