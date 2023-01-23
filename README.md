@@ -18,6 +18,8 @@ You may include standard genshindb options as url query parameters (case-sensiti
 - resultLanguage // Output language that you want your results to be in.
 
 Examples:  
+https://genshin-db-api.vercel.app/api/characters?query=hutao  
+https://genshin-db-api.vercel.app/api/characters?query=胡桃&queryLanguages=chinese&resultLanguage=chinese  
 https://genshin-db-api.vercel.app/api/talents?query=slime&matchCategories=true&queryLanguages=english,jap  
 https://genshin-db-api.vercel.app/api/weapons?query=skywardharp&dumpResult=true&resultLanguage=korean
 
