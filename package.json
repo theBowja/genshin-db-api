@@ -8,6 +8,6 @@
   "dependencies": {
     "@genshin-db/tcg": "^5.0.1",
     "@logtail/node": "^0.1.15",
-    "genshin-db": "^5.0.3"
+    "genshin-db": "^5.0.4"
   }
 }
