@@ -219,6 +219,8 @@ export default function fetchUser(req, res) {
 }
 
 function enableCors(req, res) {
+	res.setHeader('Cache-Control', 's-maxage=86400');
+	
 	res.setHeader('Access-Control-Allow-Credentials', true)
 	res.setHeader('Access-Control-Allow-Origin', '*')
 	// another common pattern
