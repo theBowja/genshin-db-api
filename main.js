@@ -211,6 +211,7 @@ function getData(req, res, version) {
     const queryresult = istcg ? genshindbtcg[command](params.query, opts) : genshindb[command](params.query, opts);
     queryresult.options.dumpResult = userDumpResult;
     log("success "+queryresult.match, { query: queryresult.query, folder: queryresult.folder, match: queryresult.match, options: queryresult.options, filename: queryresult.filename });
+    console.log(req.headers.referer);
     if(userDumpResult) {
     	res.json(queryresult);
     } else {
