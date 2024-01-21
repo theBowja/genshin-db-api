@@ -10,7 +10,7 @@ export default function fetchUser(req, res) {
 
 	const output = decode(code);
 
-	return res.json({ deckcode: code, offset: output.offset, cardshareids: output.cards });
+	return res.json({ deckcode: code, offset: output.lastByte, cardshareids: output.cards });
 }
 
 function decode(str) {
