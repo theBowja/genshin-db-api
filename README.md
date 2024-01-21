@@ -71,7 +71,7 @@ You may include `level` as a query parameter to get the stats for a specific lev
 Examples:  
 https://genshin-db-api.vercel.app/api/v5/stats?folder=characters&query=胡桃&queryLanguages=chinese  
 https://genshin-db-api.vercel.app/api/v5/stats?folder=weapons&query=jadespear&level=90  
-https://genshin-db-api.vercel.app/api/v5/stats?folder=characters&query=hutao&dumpResult=true
+https://genshin-db-api.vercel.app/api/v5/stats?folder=characters&query=hutao&dumpResult=true  
 https://genshin-db-api.vercel.app/api/v5/stats?folder=characters&query=ganyu&level=60+  
 
 ## tcgdeckshare/decode?code=[deckcode]

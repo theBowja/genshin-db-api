@@ -1,17 +1,16 @@
 import convertXtoYbitarray from "convert-x-to-y-bit-array";
 import { getData, enableCors } from '../../main.js';
 
-// `/api/[command]
+// `/api/tcgdeckshare/decode
 export default function fetchUser(req, res) {
 	if (!enableCors(req, res)) return;
 	if (req.query.code === undefined) return;
 
-	let output = decode(req.query.code);
+	let code = decodeURIComponent(req.query.code.replaceAll(' ', '+'));
 
-	return res.json({
-		input: req.query.code,
-		output: output
-	});
+	let output = decode(code);
+
+	return res.json({ deckcode: code, cardshareids: output });
 }
 
 function decode(str) {
@@ -29,8 +28,3 @@ function decode(str) {
 
 	return output;
 }
-
-// const str = "A0Bw8TQPARBw8pcPCSBw9cIPDFAg9sgQDAGAAMkQDCGQCdkQDaGQC+MQDrEwDOQQDsAA";
-// const str = "A0Bw8TQPARBw8pcPCSBw9cIPDFAg9sgQDAGAAMkQDCGQCdkQDaGQC%2BMQDrEwDOQQDsAA";
-// let tmp = decode(str);
-// console.log(tmp);
