@@ -73,3 +73,15 @@ https://genshin-db-api.vercel.app/api/v5/stats?folder=characters&query=胡桃&qu
 https://genshin-db-api.vercel.app/api/v5/stats?folder=weapons&query=jadespear&level=90  
 https://genshin-db-api.vercel.app/api/v5/stats?folder=characters&query=hutao&dumpResult=true
 https://genshin-db-api.vercel.app/api/v5/stats?folder=characters&query=ganyu&level=60+  
+
+## tcgdeckshare/decode?code=[deckcode]
+https://genshin-db-api.vercel.app/api/tcgdeckshare/decode?code=A0Bw8TQPARBw8pcPCSBw9cIPDFAg9sgQDAGAAMkQDCGQCdkQDaGQC+MQDrEwDOQQDsAA  
+Converts a tcg deck share code into an array of card share ids.
+
+Returns an array.
+
+## tcgdeckshare/encode?deck=[cardids]
+https://genshin-db-api.vercel.app/api/tcgdeckshare/encode?deck=123,123,123,123  
+Converts a comma-separated array of card share ids into a tcg deck share code.
+
+Returns a string.

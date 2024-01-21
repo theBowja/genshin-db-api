@@ -242,4 +242,7 @@ function enableCors(req, res) {
 	return true;
 }
 
-module.exports = getData;
+module.exports = {
+	getData: getData,
+	enableCors: enableCors
+}
