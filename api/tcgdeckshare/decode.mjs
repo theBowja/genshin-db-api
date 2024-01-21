@@ -1,13 +1,20 @@
-const convertXtoYbitarray = require("convert-x-to-y-bit-array");
-let { getData, enableCors } = require('../../main.js');
+import convertXtoYbitarray from "convert-x-to-y-bit-array";
+import { getData, enableCors } from '../../main.js';
 
 // `/api/[command]
 export default function fetchUser(req, res) {
 	if (!enableCors(req, res)) return;
 	if (req.query.code === undefined) return;
 
-	const str = req.query.code;
-	// const str = "A0Bw8TQPARBw8pcPCSBw9cIPDFAg9sgQDAGAAMkQDCGQCdkQDaGQC+MQDrEwDOQQDsAA";
+	let output = decode(req.query.code);
+
+	return res.json({
+		input: req.query.code,
+		output: output
+	});
+}
+
+function decode(str) {
 	const byteArray = Array.from(atob(str), c => c.codePointAt(0));
 	const lastByte = byteArray.pop();
 
@@ -20,5 +27,10 @@ export default function fetchUser(req, res) {
 	const output = convertXtoYbitarray(8, 12, reordered);
 	output.pop();
 
-	return res.json(output);
+	return output;
 }
+
+// const str = "A0Bw8TQPARBw8pcPCSBw9cIPDFAg9sgQDAGAAMkQDCGQCdkQDaGQC+MQDrEwDOQQDsAA";
+// const str = "A0Bw8TQPARBw8pcPCSBw9cIPDFAg9sgQDAGAAMkQDCGQCdkQDaGQC%2BMQDrEwDOQQDsAA";
+// let tmp = decode(str);
+// console.log(tmp);
