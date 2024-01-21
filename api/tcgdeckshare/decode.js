@@ -20,5 +20,5 @@ export default function fetchUser(req, res) {
 	const output = convertXtoYbitarray(8, 12, reordered);
 	output.pop();
 
-	return output;
+	return res.json(output);
 }
