@@ -10,8 +10,7 @@ export default function fetchUser(req, res) {
 
 	let output = encode(deck);
 
-	return res.json('')
-	return res.json({ input: code, output: output });
+	return res.json({ deckcode: output, cardshareids: deck });
 }
 
 function encode(deck) {
