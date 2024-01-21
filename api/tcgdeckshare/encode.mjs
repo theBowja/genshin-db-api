@@ -7,7 +7,7 @@ export default function fetchUser(req, res) {
 	if (req.query.deck === undefined) return;
 
 	const deck = req.query.deck.split(',').map(id => parseInt(id));
-	const offset = req.query.offset || 0;
+	const offset = parseInt(req.query.offset) || 0;
 
 	const output = encode(deck, offset);
 
