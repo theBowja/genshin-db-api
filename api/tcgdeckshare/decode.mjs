@@ -13,6 +13,7 @@ export default function fetchUser(req, res) {
 	return res.json({ deckcode: code, offset: output.lastByte, cardshareids: output.cards });
 }
 
+// adapted from https://github.com/gjfLeo/summoners-summit/blob/main/utils/decks/share-code.ts
 function decode(str) {
 	const byteArray = Array.from(atob(str), c => c.codePointAt(0));
 

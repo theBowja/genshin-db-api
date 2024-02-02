@@ -14,6 +14,7 @@ export default function fetchUser(req, res) {
 	return res.json({ deckcode: output, offset: offset, cardshareids: deck });
 }
 
+// adapted from https://github.com/gjfLeo/summoners-summit/blob/main/utils/decks/share-code.ts
 function encode(deck, offset=0) {
 	deck.push(0);
 
