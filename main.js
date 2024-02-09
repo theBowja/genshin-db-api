@@ -224,7 +224,7 @@ function getData(req, res, version) {
 }
 
 function enableCors(req, res) {
-	res.setHeader('Cache-Control', 'public, maxage=5, immutable');
+	res.setHeader('Cache-Control', 'public, max-age=5, immutable');
 	res.setHeader('CDN-Cache-Control', 's-maxage=86400');
 	
 	res.setHeader('Access-Control-Allow-Credentials', true)
