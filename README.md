@@ -78,10 +78,19 @@ https://genshin-db-api.vercel.app/api/v5/stats?folder=characters&query=ganyu&lev
 https://genshin-db-api.vercel.app/api/tcgdeckshare/decode?code=A0Bw8TQPARBw8pcPCSBw9cIPDFAg9sgQDAGAAMkQDCGQCdkQDaGQC+MQDrEwDOQQDsAA  
 Converts a tcg deck share code into an array of card share ids.
 
-Returns an array.
+Returns an object with the properties:
+- `deckcode`
 
 ## tcgdeckshare/encode?deck=[cardids]
-https://genshin-db-api.vercel.app/api/tcgdeckshare/encode?deck=123,123,123,123  
+https://genshin-db-api.vercel.app/api/tcgdeckshare/encode?deck=55,52,23,151,151,194,194,200,200,201,201,217,217,227,227,228,228,241,241,242,242,245,245,246,256,256,258,265,266,267,267,268,268
 Converts a comma-separated array of card share ids into a tcg deck share code.
 
+You can an `offset` query parameter to generate a different deck share code for the same deck. This is useful for the extremely rare case where the deck share code is invalid because it contains a bad word.
+Example:
+https://genshin-db-api.vercel.app/api/tcgdeckshare/encode?offset=1&deck=55,52,23,151,151,194,194,200,200,201,201,217,217,227,227,228,228,241,241,242,242,245,245,246,256,256,258,265,266,267,267,268,268
+
 Returns a string.
+
+## tcgdeckshare/getdata?code=[deckcode]&deck=[cardids]
+https://genshin-db-api.vercel.app/api/tcgdeckshare/decode?code=A0Bw8TQPARBw8pcPCSBw9cIPDFAg9sgQDAGAAMkQDCGQCdkQDaGQC+MQDrEwDOQQDsAA  
+
