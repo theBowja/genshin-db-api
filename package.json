@@ -9,6 +9,6 @@
     "@genshin-db/tcg": "^5.1.12",
     "@logtail/node": "^0.4.21",
     "convert-x-to-y-bit-array": "^1.0.0",
-    "genshin-db": "^5.2.0"
+    "genshin-db": "^5.2.1"
   }
 }
