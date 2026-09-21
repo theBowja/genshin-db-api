@@ -6,9 +6,9 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@genshin-db/tcg": "^5.2.12",
+    "@genshin-db/tcg": "^5.2.14",
     "@logtail/node": "^0.4.21",
     "convert-x-to-y-bit-array": "^1.0.0",
-    "genshin-db": "^5.2.13"
+    "genshin-db": "^5.2.14"
   }
 }
